@@ -56,11 +56,17 @@ h2 {
     color: cornflowerblue;
     text-align: center;
 }
-ul { 
-    display: none; 
-}
+
 p {
     text-align: center;
+}
+
+#image_list{
+    display: none;
+}
+
+#main_image{
+    max-width: 200px;
 }
 
 .menu-ul {
@@ -86,4 +92,8 @@ p {
   /* Change the link color to #111 (black) on hover */
   .menu-li a:hover {
     background-color: cornflowerblue;
+  }
+
+  .hidden{
+    display: none;
   }
