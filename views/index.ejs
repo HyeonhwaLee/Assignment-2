@@ -1,96 +1,115 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="css/project.css" />
+    <link rel="stylesheet" href="css/design.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Jest Smart Home</title>
+    <title>Dashboard</title>
   </head>
+  <%- include('layouts/menu')-%>
   <body>
-    <%- include('layouts/menu')-%>
     <main>
-      <h1>Jest Smart Home</h1>
+      
       <div>
-        <h3 id="date_display"></h3>
+        <h1 id="date"></h1>
       </div>
-      <form>
+      <h1>- Dashboard -</h1>
+
+      <div id="currentSetting">
+        Current Setting
+      </div>
+      <div class="Tab-now">
         <div>
-          <label>Notifications</label>
-          <input type="checkbox" id="notifications" checked />
+          <label>Device Name:&nbsp;</label>
+          <span class="current-setting" id="current_name"></span>
         </div>
+
         <div>
-          <label>Power Mode</label>
+          <label>Notification:&nbsp;</label>
+          <span class="current-setting" id="current_notification"></span>
+        </div>
+
+        <div>
+          <label>Lighting Mode:&nbsp;</label>
+          <span class="current-setting" id="current_lighting_mode"></span>
+        </div>
+
+        <div>
+          <label>Postal Code:&nbsp;</label>
+          <span class="current-setting" id="current_postal_code"></span>
+        </div>
+        
+        <div>
+          <label>Temperature:&nbsp;</label>
+          <span class="current-setting" id="current_temperature"></span>
+        </div>
+      </div>
+          
+      <form id="dashboard_form">
+        <div id="currentSetting">
+          Please change your setting below
+        </div>
+
+        <div class="Tab-setting">
+          <div>
+          <label>Device Name:&nbsp;</label>
+          <input type="text" id="device_name" name="device_name" required/>
+        </div>
+
+        <div>
+          <label>Notification:&nbsp;</label>
+          <input type="checkbox" id="notification" name="notification", checked >
+        </div>
+
+        <div>
+          <label>Lighting Mode:&nbsp;</label>
         </div>
         <div>
           <div>
+            <input type="radio" id="off" name="lighting_mode", value="Off" >
             <label for="off">Off</label>
-            <input type="radio" id="off" name="lighting_mode" value="Off" />
           </div>
+          
           <div>
+            <input type="radio" id="away" name="lighting_mode", value="Away" >
             <label for="away">Away</label>
-            <input type="radio" id="css" name="lighting_mode" value="Away" />
           </div>
+
           <div>
-            <label for="eco">Economy</label>
-            <input
-              type="radio"
-              id="eco"
-              name="lighting_mode"
-              value="Eco"
-              
-            />
+            <input type="radio" id="echo" name="lighting_mode", value="Echo" >
+            <label for="echo">Echo</label>
           </div>
+          
           <div>
+            <input type="radio" id="full" name="lighting_mode", value="Full" >
             <label for="full">Full</label>
-            <input type="radio" id="full" name="lighting_mode" value="Full" />
           </div>
         </div>
+
         <div>
-          <label>Location</label>
-          <input
-            type="text"
-            id="location"
-            placeholder="Postal Code"
-            value="L7W 4T8"
-          /><span id="location_error" class="error-span"></span>
+          <label>Postal Code:&nbsp;</label>
+          <input type="text" id="postal_code" name="postal_code" />
+          <br><span id="postal_code_error" class="error-span"></span>
         </div>
+
         <div>
-          <label>Temperature</label>
-          <input
-            type="number"
-            id="temperature"
-            name="temperature"
-            min="5"
-            max="30"
-            step="0.5"
-            value="21"
-          /><span id="temperature_error" class="error-span"></span>
+          <label for="temperature">Temperature:&nbsp;</label>
+          <input type="number" id="temperature" name="temperature" min="10" max="25" step="0.5" />
+          <br> ※ You can only set it between 10°C and 25°C
+          <br><span id="temperature_error" class="error-span"></span>
         </div>
+
         <div>
-          <label></label>
-          <input type="submit" value="Update" id="update_settings" />
-          <input type="reset" value="Reset" id="reset_form" />
+          <input type="submit" id="submit" value="Submit" />
+          <input type="reset" id="reset" value="Reset Form" />
         </div>
+      </div>
       </form>
-      <h2>Current Settings</h2>
-      <div>
-        <label>Notifications&nbsp;</label>
-        <span class="current-setting" id="setting_notifications">On</span>
-      </div>
-      <div>
-        <label>Lighting Mode&nbsp;</label>
-        <span class="current-setting" id="setting_lighting_mode">Eco</span>
-      </div>
-      <div>
-        <label>Location&nbsp;</label
-        ><span class="current-setting" id="setting_location">L7W 4T8</span>
-      </div>
-      <div>
-        <label>Temperature&nbsp;</label
-        ><span class="current-setting" id="setting_temperature">21</span
-        ><span>°C</span>
-      </div>
+      
     </main>
+    
     <script src="js/dashboard.js"></script>
   </body>
+  <%- include('layouts/footer')-%>
 </html>
+

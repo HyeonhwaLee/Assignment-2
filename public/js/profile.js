@@ -7,12 +7,12 @@ const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const passwordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$/;
 
 const onReset = (evt) => {
+  //Reset each fields
   resetErrors();
-  //TODO:: Reset the reset-able fields
+
   $("#first_name").value = "";
   $("#last_name").value = "";
   $("#email").value = "";
-
   $("#password").value = "";
   $("#confirm_password").value = "";
 
@@ -20,66 +20,71 @@ const onReset = (evt) => {
 };
 
 const resetErrors = () => {
+  //Reset error messages
   $("#name_error").textContent = "";
   $("#password_error").textContent = "";
   $("#email_error").textContent = "";
+  $("#birthday_error").textContent = "";
 };
 
 const onSubmit = (evt) => {
   resetErrors();
+  let form_error_profile = false;
+  //arrange every errors in one form
 
-  //TODO:: Use this boolean to keep track of any errors because you need to prevent the settings
-  //       from updating if even one field is wrong
-  let formErrors = false;
-
-  let firstName = $("#first_name").value;
-  let lastName = $("#last_name").value;
+  let first_name = $("#first_name").value;
+  let last_name = $("#last_name").value;
   let email = $("#email").value;
   let password = $("#password").value;
-  let confirmPassword = $("#confirm_password").value;
-  let dob = new Date($("#dob").value);
+  let confirm_password = $("#confirm_password").value;
+  let bday = new Date($("#birthday").value);
   let today = new Date();
 
-  if (firstName == "" || lastName == "") {
-    $("#name_error").textContent = "Name fields can't be empty.";
-    formErrors = true;
+
+  if(first_name=="" || last_name=="") {
+     //check if the name is filled then if not show up the error message
+    $("#name_error").textContent = "※ Check if you entered your full name";
+    form_error_profile = true;
   }
 
-  if (!emailRegEx.test(email)) {
-    $("#email_error").textContent = "Email is not valid";
-    formErrors = true;
+
+  if(!passwordRegEx.test(password)) {
+    //Test if the password is the right format then if not show up the error message
+    $("#password_error").textContent = "※ Check your password";
+    form_error_profile = true;
+  }
+  if(password!=confirm_password){
+    //Test if the password and confirm password match then if not show up the error message
+    $("#password_error").textContent = "※ Passwords do not match.";
+    form_error_profile = true;
   }
 
-  if (!passwordRegEx.test(password)) {
-    $("#password_error").textContent = "Password is not secure.";
-    formErrors = true;
+  if(!emailRegEx.test(email)){
+    //Test if the email is the right format then if not show up the error message
+    $("#email_error").textContent = "※ Invaild";
+    form_error_profile = true;
+  }
+  if (today.setHours(0, 0, 0, 0) < bday) {
+    //if user's birthday is in the future then show up the error message
+    $("#birthday_error").textContent = "※ Check again. It must be in the past.";
+    form_error_profile = true;
   }
 
-  if (password != confirmPassword) {
-    $("#password_error").textContent = "Passwords do not match.";
-    formErrors = true;
-  }
+  if (!form_error_profile) {
+    //as long as there's any errors, it cannot be submitted
+    $("#first_name_updated").textContent = $("#first_name").value;
+    $("#last_name_updated").textContent = $("#last_name").value;
+    $("#email_updated").textContent = $("#email").value;
+    $("#birthday_updated").textContent = bday.toDateString();
 
-  if (today.setHours(0, 0, 0, 0) < dob) {
-    $("#dob_error").textContent = "Date of birth must be in the past.";
-    formErrors = true;
-  }
-
-  if (!formErrors) {
-    $("#user_dob").textContent = dob.toDateString();
-
-    $("#user_password_last_changed").textContent = today.toDateString();
-
-    $("#user_first_name").textContent = $("#first_name");
-    $("#user_last_name").textContent = $("#last_name");
-    $("#user_email").textContent = $("#email");
+  }else{
+    evt.preventDefault();
   }
 
   evt.preventDefault();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  $("#update_profile").addEventListener("click", onSubmit);
-
-  $("#reset_form").addEventListener("click", onReset);
+  $("#submit").addEventListener("click", onSubmit);//add submit form listener
+  $("#reset").addEventListener("click", onReset);//add reset form listener
 });

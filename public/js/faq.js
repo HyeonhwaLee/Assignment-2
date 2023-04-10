@@ -2,23 +2,33 @@
 
 const $ = (selector) => document.querySelector(selector);
 
-let timerCounter = 10;
+let timerCounter = 600;
 let timer;
+
+let min;
+let sec;
 
 const goToTerms = () => {
     timerCounter -= 1;
 
+    min = parseInt(timerCounter/60)
+    sec = parseInt(timerCounter%60)
+
+
     if(timerCounter>0){
         $("#seconds").textContent = timerCounter;
+
     }else{
         window.location.href = "terms"
     }
 }
 
+
 const acceptTerms = () => {
     clearInterval(timer);
     $("#terms").setAttribute("class","hidden");
 }
+
 
 const toggleQuestion = (evt) => {
     evt.currentTarget.classList.toggle("minus");

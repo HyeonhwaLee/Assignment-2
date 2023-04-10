@@ -1,89 +1,86 @@
 "use strict";
-
 const $ = (selector) => document.querySelector(selector);
 
 const postalRegEx =
   /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
 
 const onReset = (evt) => {
-  //TODO:: Reset the reset-able fields
+  //Reset each fields
   resetErrors();
-
-  $("#notifications").checked = true;
-
-  $("#eco").checked = true;
-  $("#temperature").value = 21;
-  $("#location").value = "L7W 4T8";
-
+  $("#device_name").value = "";
+  $("#notification").checked = false;
+  $("#off").checked="";
+  $("#away").checked = "";
+  $("#echo").checked="";
+  $("#full").checked = "";
+  $("#postal_code").value = "";
+  $("#temperature").value = "";
   evt.preventDefault();
 };
 
 const resetErrors = () => {
-  $("#temperature_error").textContent = "";
-  $("#location_error").textContent = "";
-  console.error("Fields Reset");
+    //Reset error messages
+    $("#temperature_error").textContent = "";
+    $("#postal_code_error").textContent = "";
 };
+
+
 
 const onSubmit = (evt) => {
-  //TODO::Reset any errors before submitting
-  resetErrors();
+    resetErrors();
 
-  //TODO:: Set notifications since it doesn't need to be validated
-  let notificationsOn = $("#notifications").checked;
+    evt.preventDefault();
 
-  $("#setting_notifications").textContent = notificationsOn ? "On" : "Off";
+    let form_error = false;
+    //arrange every errors in one form
 
-  //TODO:: Set lighting mode with a for loop since it doesn't need to be validated
-  //querySelectorAll returns an array of everything that matches the argument
-  let lightingModeOptions = document.querySelectorAll("[name='lighting_mode']");
+    let Device_name = $("#device_name").value;
+    let notification_on = $("#notification").checked;
+    let lighting_mode = document.querySelectorAll("[name='lighting_mode']")
+    let postal_code = $("#postal_code").value;
+    let postal_code_error =$("#postal_code_error")
+    let temperature = $("#temperature").value;
+    let temperature_error = $("#temperature_error");
 
-  for (let i = 0; i < lightingModeOptions.length; i++) {
-    if (lightingModeOptions[i].checked) {
-      //Set setting_lighting_mode to the value of the selected radio button
-      $("#setting_lighting_mode").textContent = lightingModeOptions[i].value;
+
+    for (let i = 0; i < lighting_mode.length; i++) {
+        if (lighting_mode[i].checked) {
+          //Set setting_lighting_mode to the value of the selected radio button
+          $("#current_lighting_mode").textContent = lighting_mode[i].value;
+        }
     }
-  }
+  
+    if (! postalRegEx.test(postal_code)){
+        //Test if the postal code is vaild then if not show up the error message
+        postal_code_error.textContent = "※ Invaild. The format is supposed to be A#A #A#";
+        form_error = true;
+    }
 
-  //TODO:: Validate the postal code with the Regular Expression,
-  //TODO:: Display an error if not valid
-  let location = $("#location").value;
+    if (isNaN(temperature) || temperature == "") {
+        //Test if the temperature is number then if not show up the error message
+        temperature_error.textContent = "※ Invaild";
+        form_error = true;
+    } else if (temperature > 25 || temperature < 10) {
+        //check if the temperature in the range then if not show up the error message
+        temperature_error.textContent ="Check your setting temperature again";
+        form_error = true;
+    } 
 
-  if (postalRegEx.test(location)) {
-    //if the postal code is valid this code will run
-    $("#setting_location").textContent = location;
-  } else {
-    //Add your logic here if the postal code is not valid
-    $("#location_error").textContent =
-      "The postal code did not match the format required.";
-  }
-
-  //TODO:: Validate the temperature by checking the range and if it's a number
-  //TODO:: Display an error if not valid
-  let temperature = $("#temperature").value;
-  let temperatureError = $("#temperature_error");
-
-  if (isNaN(temperature) || temperature == "") {
-    temperatureError.textContent = "This is not a valid temperature selection.";
-  } else if (temperature > 25) {
-    temperatureError.textContent =
-      "Max temperature is 25C, setting temperature to Max";
-    $("#setting_temperature").textContent = 25;
-  } else if (temperature < 10) {
-    temperatureError.textContent =
-      "Min temperature is 10C, setting temperature to Min";
-    $("#setting_temperature").textContent = 10;
-  } else {
-    $("#setting_temperature").textContent = temperature;
-  }
-
-  evt.preventDefault();
+    if (!form_error){
+        //as long as there's any errors, it cannot be submitted
+        $("#current_name").textContent = Device_name;
+        $("#current_notification").textContent = notification_on ? "On" : "Off";
+        $("#current_postal_code").textContent = postal_code;
+        $("#current_temperature").textContent = temperature;
+        $("#dashboard_form").submit();
+    }else{
+        evt.preventDefault();
+    }
 };
 
+
 document.addEventListener("DOMContentLoaded", () => {
-  //TODO:: Add current date
-  $("#date_display").textContent = new Date().toDateString();
-  //TODO:: Add Reset Form listener
-  $("#reset_form").addEventListener("reset", onReset);
-  //TODO:: Add Submit Form listener
-  $("#update_settings").addEventListener("click", onSubmit);
+    $("#date").textContent = new Date().toDateString();//add current date
+    $("#reset").addEventListener("reset", onReset);//add reset form listener
+    $("#submit").addEventListener("click", onSubmit);//add submit form listener
 });

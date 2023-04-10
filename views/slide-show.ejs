@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Who's living in the smart house?</title>
+    <link rel="stylesheet" href="css/design.css">
+</head>
+
+<%- include('layouts/menu')-%>
+
+<body>
+    <a class="prev" onclick="plusSlides(-1)"> ❮ </a>
+    <a class="next" onclick="plusSlides(1)"> ❯ </a>
+    <main>
+        <h1>Who's in the smart house?</h1>
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+              <img id=slide_image src="images/1.png">
+              <div class="text">MOM</div>
+            </div>
+          
+            <div class="mySlides fade">
+              <img id=slide_image src="images/2.png">
+              <div class="text">DAD</div>
+            </div>
+          
+            <div class="mySlides fade">
+              <img id=slide_image src="images/3.png">
+              <div class="text">BABY</div>
+            </div>
+
+            <div class="mySlides fade">
+                <img id=slide_image src="images/4.png">
+                <div class="text">PUPPY</div>
+            </div>
+
+            <div class="mySlides fade">
+                <img id=slide_image src="images/5.png">
+                <div class="text">KITTY</div>
+            </div>
+          
+          </div>
+
+
+
+
+<!-- 
+        <div class="container">
+            <ul id="image_list">
+        
+                    <li><a class="slide" href="images/1.png" title="MOM"></a></li>
+                    <li><a class="slide" href="images/2.png" title="DAD"></a></li>
+                    <li><a class="slide" href="images/3.png" title="BABY"></a></li>
+                    <li><a class="slide" href="images/4.png" title="PUPPY"></a></li>
+                    <li><a class="slide" href="images/5.png" title="CAT"></a></li>
+            </ul>
+           
+
+
+            <div class="buttons">
+              <button class="controls" id="previous">&lt;</button>          
+              <button class="controls" id="next">&gt;</button>
+            </div>
+          </div> -->
+
+        <!-- <ul id="image_list">
+            <li><a href="images/1.png" title="MOM"></a></li>
+            <li><a href="images/2.png" title="DAD"></a></li>
+            <li><a href="images/3.png" title="BABY"></a></li>
+            <li><a href="images/4.png" title="PUPPY"></a></li>
+            <li><a href="images/5.png" title="CAT"></a></li>
+        </ul> -->
+
+       
+<!--            
+        <p><img id="main_image" src="images/1.png" ></p>
+        <h2 id="caption"></h2>     -->
+
+        <script src="js/slide-show.js"></script>
+    </main>  
+</body>
+<%- include('layouts/footer')-%>
+</html>

@@ -1,41 +1,28 @@
-"use strict";
+let slideIndex = 1;
+showSlides(slideIndex);
 
-const $ = (selector) => document.querySelector(selector);
-
-let imageCounter = 0;
-const caption = $("#caption");
-const mainImage = $("#main_image");
-
-let imageCache = [];
-
-const swapImage = () => {
-    imageCounter = (imageCounter+1) % (imageCache.length);
-
-    mainImage.src = imageCache[imageCounter].src;
-    mainImage.alt = imageCache[imageCounter].alt;
-
-    caption.textContent = imageCache[imageCounter].alt;
-    
+function plusSlides(n) {
+  showSlides(slideIndex += n);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
 
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
 
-    const links = document.querySelectorAll("a"); //type so not #
-
-    let image;
-
-   
-
-    for (let link of links){
-        image = new Image();
-
-        image.src = link.href;
-        image.alt = link.title;
-
-        imageCache.push(image);
-    }
-
-    setInterval(swapImage, 2000);
-
-});
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
